@@ -1,12 +1,18 @@
 <?php
-    // error_reporting(0);
+    // Dapatkan nama database dari form
+    $name_db = $_POST['name_db'];
+    // Default waktu untuk nama file
     date_default_timezone_set("Asia/Makassar");
     $waktu = time();
-    $file= 'backup_database_'.date('d-m-y H-i-s', $waktu).'.sql';
-    backup_tables("localhost","root","","test-backup",$file);
+    // Set nama file
+    $file= $name_db.'-'.date('d-m-y H-i-s', $waktu).'.sql';
+    // Pemanggilan function untuk membuat file .spl
+    backup_tables("localhost","root","",$name_db,$file);
 
+    // Setelah berhasil dibackup maka akan kembali ke halaman utama/index
     echo '<script language="javascript"> window.location.href = "index.php" </script>';
 
+    // Function membuat .sql
     function backup_tables($host,$user,$pass,$name,$nama_file,$tables ='*') {
     $link = mysqli_connect($host,$user,$pass);
     $link2 = mysqli_connect($host,$user,$pass,$name);
